@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Vetrina Prodotti</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap');
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Montserrat', Arial, sans-serif;
+      background: linear-gradient(135deg, #f8fafc 0%, #e0e7ff 100%);
+      min-height: 100vh;
+    }
+    header {
+      background: #6366f1;
+      color: #fff;
+      padding: 2rem 0 1rem 0;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(99,102,241,0.1);
+      letter-spacing: 2px;
+    }
+    h1 {
+      margin: 0;
+      font-size: 2.5rem;
+      letter-spacing: 1px;
+      text-shadow: 0 2px 8px #3730a3;
+    }
+    main {
+      max-width: 1100px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    .card {
+      background: #fff;
+      border-radius: 1.2rem;
+      box-shadow: 0 4px 24px rgba(99,102,241,0.13);
+      overflow: hidden;
+      transition: transform 0.2s, box-shadow 0.2s;
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+      position: relative;
+      animation: fadeIn 0.8s;
+    }
+    .card:hover {
+      transform: translateY(-8px) scale(1.03);
+      box-shadow: 0 8px 32px rgba(99,102,241,0.18);
+    }
+    .card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      background: #e0e7ff;
+      transition: filter 0.3s;
+    }
+    .card:hover img {
+      filter: brightness(0.95) blur(1px);
+    }
+    .card-content {
+      padding: 1.2rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .card-title {
+      font-size: 1.3rem;
+      color: #3730a3;
+      margin: 0 0 0.5rem 0;
+      font-weight: 600;
+    }
+    .card-desc {
+      color: #64748b;
+      font-size: 1rem;
+      margin-bottom: 1rem;
+      flex: 1;
+    }
+    .card-price {
+      font-size: 1.1rem;
+      color: #16a34a;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+    .badge {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: #f59e42;
+      color: #fff;
+      padding: 0.3rem 0.8rem;
+      border-radius: 1rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      box-shadow: 0 2px 8px rgba(245,158,66,0.15);
+      letter-spacing: 1px;
+    }
+    @media (max-width: 600px) {
+      h1 { font-size: 1.5rem; }
+      .card img { height: 120px; }
+      .card-content { padding: 0.7rem; }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
+    .loader {
+      margin: 4rem auto;
+      border: 6px solid #e0e7ff;
+      border-top: 6px solid #6366f1;
+      border-radius: 50%;
+      width: 48px;
+      height: 48px;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg);}
+      100% { transform: rotate(360deg);}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Vetrina Prodotti</h1>
+    <p>Scopri i nostri prodotti selezionati</p>
+  </header>
+  <main>
+    <div id="loader" class="loader"></div>
+    <div id="prodotti" class="grid" style="display:none"></div>
+  </main>
+  <script>
+    fetch('prodotti.json')
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById('loader').style.display = 'none';
+        const grid = document.getElementById('prodotti');
+        grid.style.display = 'grid';
+        grid.innerHTML = data.map(prodotto => `
+          <div class="card">
+            ${prodotto.novita ? `<span class="badge">Novità</span>` : ''}
+            <img src="${prodotto.img}" alt="${prodotto.nome}">
+            <div class="card-content">
+              <div>
+                <div class="card-title">${prodotto.nome}</div>
+                <div class="card-desc">${prodotto.descrizione}</div>
+              </div>
+              <div class="card-price">€ ${prodotto.prezzo.toFixed(2)}</div>
+            </div>
+          </div>
+        `).join('');
+      })
+      .catch(() => {
+        document.getElementById('loader').style.display = 'none';
+        document.getElementById('prodotti').innerHTML = '<p>Errore nel caricamento dei prodotti.</p>';
+        document.getElementById('prodotti').style.display = 'block';
+      });
+  </script>
+</body>
+</html>

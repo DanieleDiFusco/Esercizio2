@@ -1,0 +1,23 @@
+[
+  {
+    "nome": "Cuffie Wireless",
+    "descrizione": "Audio cristallino e design ergonomico per ascoltare la tua musica ovunque.",
+    "prezzo": 59.99,
+    "img": "https://images.unsplash.com/photo-1511367461989-f85a21fda167?auto=format&fit=crop&w=400&q=80",
+    "novita": true
+  },
+  {
+    "nome": "Smartwatch Pro",
+    "descrizione": "Monitora la tua salute e ricevi notifiche direttamente al polso.",
+    "prezzo": 129.90,
+    "img": "https://images.unsplash.com/photo-1516574187841-cb9cc2ca948b?auto=format&fit=crop&w=400&q=80",
+    "novita": false
+  },
+  {
+    "nome": "Zaino Tech",
+    "descrizione": "Zaino resistente all'acqua con porta USB integrata.",
+    "prezzo": 39.50,
+    "img": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80",
+    "novita": true
+  }
+]
